@@ -1,6 +1,12 @@
 .button-hover {
-    border: thick;
+    border-style: thick;
     background-color: blue;
     padding: 5px;
     margin: 20px;
+}
+
+.text-area {
+    padding: 10px;
+    border-style: double;
+    width: 50px;
 }
