@@ -28,26 +28,30 @@ test('renders correctly', () => {
     expect(shallowWrapper).toBeTruthy();
     ;
 });
-
-test('renders increment button', () => {
-    const shallowWrapper = mountUp();
-    const incrementButton = wrapper(shallowWrapper, 'button1');
-    expect(incrementButton.length).toBe(1);
-    // console.log(incrementButton.getDOMNode());
-    expect(incrementButton.getDOMNode()).toHaveTextContent('Increment');
-    // incrementButton.getElement()
-});
-
-test('renders decrement button', () => {
-    const shallowWrapper = mountUp();
-    const decrementButton = wrapper(shallowWrapper, 'button2');
-    expect(decrementButton.getDOMNode()).toHaveTextContent('Decrement');
-});
-
-test('renders counter', () => {
-    const shallowWrapper = mountUp();
-    const counter = wrapper(shallowWrapper, 'counter');
-    expect(counter.length).toBe(1);
+describe('checking the elements', () => {
+    let shallowWrapper;
+    beforeEach (() => {
+        shallowWrapper = mountUp();
+    })
+    test('renders increment button', () => {
+        const incrementButton = wrapper(shallowWrapper, 'button1');
+        expect(incrementButton.length).toBe(1);
+        // console.log(incrementButton.getDOMNode());
+        expect(incrementButton.getDOMNode()).toHaveTextContent('Increment');
+        // incrementButton.getElement()
+    });
+    test('renders decrement button', () => {
+        const decrementButton = wrapper(shallowWrapper, 'button2');
+        expect(decrementButton.getDOMNode()).toHaveTextContent('Decrement');
+    });
+    test('renders counter', () => {
+        const counter = wrapper(shallowWrapper, 'counter');
+        expect(counter.length).toBe(1);
+    });
+    test('renders input area', () => {
+        const counter = wrapper(shallowWrapper, 'input');
+        expect(counter.length).toBe(1);
+    });
 });
 
 test('check state', () => {

@@ -43,7 +43,7 @@ export default class Child extends React.Component {
                 <h1 data-testid="error">
                     {this.state.error}
                 </h1>
-                <div>
+                <div data-testid = "input">
                     Enter a required age
                 <input type='text' onKeyPress = {this._enteredAge} ref = {this.myRef}></input>
                 </div>

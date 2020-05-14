@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import '../styles/Button.scss';
 import * as actions from '../actions/Actions';
 
 export class SecondChild extends React.Component {
@@ -45,7 +44,7 @@ export class SecondChild extends React.Component {
                 <h1 data-testid="error">
                     {this.state.error}
                 </h1>
-                <div>
+                <div data-testid = "input">
                     Enter a required age
                 <input type= 'number' onKeyPress={this._enteredAge} ref={this.myRef} />
                 </div>
