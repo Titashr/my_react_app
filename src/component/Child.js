@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 export default class Child extends React.Component {
     constructor(props) {
         super(props);
+        this.myRef = React.createRef();
         this.state = {
             age: this.props.age,
             error: null
@@ -14,7 +15,7 @@ export default class Child extends React.Component {
 
     _increaseAge = () => {
         this.setState({
-            age: this.state.age + 1,
+            age: parseInt(this.state.age, 10) + 1,
             error: null
         });
     }
@@ -27,12 +28,25 @@ export default class Child extends React.Component {
         }
     }
 
+    _enteredAge = (event) => {
+        if (event.key === 'Enter') {
+            this.setState({age: event.target.value});
+            this.myRef.current.blur();
+            
+        }
+    };
+
     render() {
+        console.log(this.state);
         return (
             <div>
                 <h1 data-testid="error">
                     {this.state.error}
                 </h1>
+                <div>
+                    Enter a required age
+                <input type='text' onKeyPress = {this._enteredAge} ref = {this.myRef}></input>
+                </div>
                 <div data-testid="counter" className='text-area'>
                     {this.state.age}
                 </div>
