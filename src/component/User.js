@@ -36,21 +36,21 @@ export class User extends React.Component {
 
     render() {
         return (
-            <div className='container'>
-                <h1 data-testid="error" className='text-center'>
+            <div className='container' data-testid = 'userDiv'>
+                <h1 data-testid="userName" className='text-center'>
                     {this.state.person.name.first} {this.state.person.name.last}
                 </h1>
-                <h2 data-testid="error" className='text-center'>
+                <h2 data-testid="gender" className='text-center'>
                     {this.state.person.gender}
                 </h2>
-                <h2 data-testid="error" className='text-center'>
+                <h2 data-testid="email" className='text-center'>
                     {this.state.person.email}
                 </h2>
-                <h2 data-testid="error" className='text-center'>
+                <h2 data-testid="phone" className='text-center'>
                     {this.state.person.phone}
                 </h2>
-                <div data-testid="error" className='text-center'>
-                    <img src = {this.state.person.picture.large} className = 'img-rounded'/>
+                <div data-testid="image" className='text-center'>
+                    <img src = {this.state.person.picture.large} className = 'img-rounded' alt='#'/>
                 </div>
             </div>
         );

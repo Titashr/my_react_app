@@ -1,76 +1,91 @@
 import React from 'react';
-import Enzyme, { shallow, mount } from 'enzyme';
-import EnzymeAdapter from 'enzyme-adapter-react-16';
+import { mount } from 'enzyme';
 import SecondChild from '../component/SecondChild';
-import wrapper from '../utils/testUtil';
-// import '@testing-library/jest-dom/extend-expect';
+import { wrapper, storeFactory } from '../utils/testUtil';
+import * as actions from '../actions/Actions';
+import reducers from "./../reducers/index";
+// import ageReducer from './../reducers/AgeReducer';
+// import userReducer from './../reducers/UserReducer';
 
-Enzyme.configure({ adapter: new EnzymeAdapter() });
+const defaultProps = { age: 0 };
 
-// const setUp = (props={}, state = {}) => {
-//     const wrapper = shallow(<SecondChild {...props} />);
-//     if (state) {
-//         wrapper.setState(state);
-//     }
-//     return wrapper;
-// };
+const initialState = {
+    AgeReducer: {
+        age: null,
+        error: null
+    },
+    UserReducer: {
+        person:{}
+    }
+};
 
-// const mountUp = (props = {}, state = {}) => {
-//     const wrapper = mount(<SecondChild {...props} />);
-//     if(state) {
-//         wrapper.setState(state)
-//     };
-//     return wrapper;
-// };
+const mountUp = (props = defaultProps, state=initialState) => {
+    const store = storeFactory(state);
+    const wrapper = mount(<SecondChild {...props} store={store} />);
+    return wrapper;
+};
 
-// test('renders correctly', () => {
-//     const shallowWrapper = setUp();
-//     shallowWrapper.exists();
-//     expect(shallowWrapper).toBeTruthy();
-//     ;
-// });
+describe('performs element checking', () => {
+    let shallowWrapper;
+    beforeEach(() => { shallowWrapper = mountUp() }
+    );
+    test('renders correctly', () => {
+        shallowWrapper.exists();
+        expect(shallowWrapper).toBeTruthy();
+        ;
+    });
 
-// test('renders increment button', () => {
-//     const shallowWrapper = mountUp();
-//     const incrementButton = wrapper(shallowWrapper, 'button1');
-//     expect(incrementButton.length).toBe(1);
-//     // console.log(incrementButton.getDOMNode());
-//     expect(incrementButton.getDOMNode()).toHaveTextContent('Increment');
-//     // incrementButton.getElement()
-// });
+    test('renders increment button', () => {
+        const incrementButton = wrapper(shallowWrapper, 'button1');
+        expect(incrementButton.getDOMNode()).toHaveTextContent('Increment');
+    });
 
-// test('renders decrement button', () => {
-//     const shallowWrapper = mountUp();
-//     const decrementButton = wrapper(shallowWrapper, 'button2');
-//     expect(decrementButton.getDOMNode()).toHaveTextContent('Decrement');
-// });
+    test('renders decrement button', () => {
+        const decrementButton = wrapper(shallowWrapper, 'button2');
+        expect(decrementButton.getDOMNode()).toHaveTextContent('Decrement');
+    });
 
-// test('renders counter', () => {
-//     const shallowWrapper = mountUp();
-//     const counter = wrapper(shallowWrapper, 'counter');
-//     expect(counter.length).toBe(1);
-// });
+    test('renders counter', () => {
+        const counter = wrapper(shallowWrapper, 'counter');
+        expect(counter.length).toBe(1);
+    });
 
-// test('check state', () => {
-//     const shallowWrapper = setUp({age:0});
-//     const initialState = shallowWrapper.state('age');
-//     expect(initialState).toBe(0);
-// });
+});
 
-// test('check increment click', () => {
-//     const age = 7
-//     const shallowWrapper = mountUp(null, {age});
-//     const increment = wrapper(shallowWrapper, 'button1');
-//     increment.simulate('click');
-//     const incrementButton = wrapper(shallowWrapper, 'counter');
-//     expect(incrementButton.text()).toContain(age + 1);
-// });
-
-// test('ceck decrement click', () => {
-//     const age = 7;
-//     const shallowWrapper = mountUp(null, {age});
-//     const decrement = wrapper(shallowWrapper, 'button2');
-//     decrement.simulate('click');
-//     const decrementButton = wrapper(shallowWrapper, 'counter');
-//     expect(decrementButton.getDOMNode()).toHaveTextContent(age - 1);
-// });
+describe('checking functionality', () => {
+    let store;
+    beforeEach(() => {store=storeFactory(initialState)});
+    test('check increment click', () => {
+        store.dispatch(actions.increment_age(0));
+        const newState = store.getState();
+        const expectedState = {
+            ...initialState, AgeReducer:{
+                age: 1,
+                error: null
+            }
+        }
+        expect(newState).toEqual(expectedState);
+    });
+    test('check decrement click', () => {
+        store.dispatch(actions.decrement_age(2));
+        const newState = store.getState();
+        const expectedState = {
+            ...initialState, AgeReducer:{
+                age: 1,
+                error: null
+            }
+        }
+        expect(newState).toEqual(expectedState);
+    });
+    test('check invalid', () => {
+        store.dispatch(actions.invalid());
+        const newState = store.getState();
+        const expectedState = {
+            ...initialState, AgeReducer:{
+                age: null,
+                error: "Age can't be smaller than 0"
+            }
+        }
+        expect(newState).toEqual(expectedState);
+    });
+})
