@@ -11,4 +11,9 @@ describe('checks for the actions', () => {
         expect(increment).toEqual({type: actionTypes.actionTypes.increase_age,
         payload: 12});
     });
+    test('renders increment button', () => {
+        const increment = actions.decrement_age(12);
+        expect(increment).toEqual({type: actionTypes.actionTypes.decrease_age,
+        payload: 12});
+    });
 });
