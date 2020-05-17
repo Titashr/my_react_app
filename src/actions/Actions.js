@@ -28,10 +28,11 @@ export function get_user_details(val) {
 
 export function get_user() {
     return (dispatch) => {
-        const response = axios.get(`https://randomuser.me/api/`);
-        response.then(res => {
+        return axios.get(`https://randomuser.me/api/`)
+        .then(res => {
             const person = res.data.results[0];
-            setTimeout(() => { dispatch(get_user_details(person)); }, 5000);
-        })
+            // console.log(person);
+            dispatch(get_user_details(person));
+        });
     }
 };
