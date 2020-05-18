@@ -37,6 +37,9 @@ export class SecondChild extends React.Component {
             this.myRef.current.blur();
         }
     }
+    clearinput = (event) => {
+        event.target.value = '';
+    }
 
     render() {
         return (
@@ -46,7 +49,7 @@ export class SecondChild extends React.Component {
                 </h1>
                 <div data-testid = "input">
                     Enter a required age
-                <input type= 'number' onKeyPress={this._enteredAge} ref={this.myRef} />
+                <input data-testid = "input-box" type= 'text' onKeyPress={this._enteredAge} ref={this.myRef} onBlur={this.clearinput}/>
                 </div>
                 <div data-testid="counter" className='text-area'>
                     {this.state.age}
@@ -72,8 +75,8 @@ export class SecondChild extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        age: state.age,
-        error: state.error
+        age: state.AgeReducer.age,
+        error: state.AgeReducer.error
     };
 }
 

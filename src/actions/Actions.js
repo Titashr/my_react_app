@@ -29,10 +29,9 @@ export function get_user_details(val) {
 export function get_user() {
     return (dispatch) => {
         return axios.get(`https://randomuser.me/api/`)
-        .then(res => {
-            const person = res.data.results[0];
-            // console.log(person);
-            dispatch(get_user_details(person));
-        });
+            .then(res => {
+                const person = res.data.results[0];
+                setTimeout(() => { dispatch(get_user_details(person)) }, 3000);
+            });
     }
 };

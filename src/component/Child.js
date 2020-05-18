@@ -36,6 +36,10 @@ export default class Child extends React.Component {
         }
     };
 
+    clearInput= (event) => {
+        event.target.value = '';
+    }
+
     render() {
         console.log(this.state);
         return (
@@ -45,7 +49,7 @@ export default class Child extends React.Component {
                 </h1>
                 <div data-testid = "input">
                     Enter a required age
-                <input type='text' onKeyPress = {this._enteredAge} ref = {this.myRef}></input>
+                <input type='text' onKeyPress = {this._enteredAge} ref = {this.myRef} onBlur = {this.clearInput}></input>
                 </div>
                 <div data-testid="counter" className='text-area'>
                     {this.state.age}

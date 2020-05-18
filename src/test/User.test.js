@@ -1,10 +1,10 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import { wrapper, storeFactory } from '../utils/testUtil';
 import moxios from 'moxios';
 // import ageReducer from './../reducers/AgeReducer';
 // import userReducer from './../reducers/UserReducer';
-import User from '../component/User';
+import User, { User as UserComponent } from './../component/User';
 import * as actions from "../actions/Actions";
 import * as actionTypes from "../actions/ActionTypes";
 
@@ -18,6 +18,12 @@ const initialState = {
     UserReducer: {
         person: {}
     }
+};
+
+const setUp = (initialState) => {
+    const store = storeFactory(initialState);
+    const wrapper = shallow(<User store={store} />).dive().dive();
+    return wrapper;
 };
 
 const mountUp = (props = defaultProps, state = initialState) => {
@@ -37,11 +43,8 @@ describe('element checking', () => {
 })
 
 describe('testing async functionality', () => {
-    beforeEach(() => {
-        moxios.install();
-    });
+    beforeEach(() => { moxios.install(); });
     afterEach(() => { moxios.uninstall(); });
-
     const store = storeFactory(initialState);
     test('api call check', () => {
         const expectedState = {
@@ -58,7 +61,6 @@ describe('testing async functionality', () => {
             }
             ]
         };
-
         moxios.wait(() => {
             const request = moxios.requests.mostRecent()
             request.respondWith({
@@ -69,8 +71,17 @@ describe('testing async functionality', () => {
         return store.dispatch(actions.get_user())
             .then(() => {
                 const newState = store.getState();
-                // console.log(newState);
                 expect(newState.UserReducer.person).toBe(expectedState.results[0]);
             });
     });
+})
+
+describe('check lifecycle methods', () => {
+    test('test componentDidMount', () => {
+        const getUserMock = jest.fn();
+        const wrapper = shallow(<UserComponent getUser = {getUserMock} />);
+        wrapper.instance().componentDidMount();
+        const getUserMockCount = getUserMock.mock.calls.length;
+        expect(getUserMockCount).toBe(1);
+    })
 })

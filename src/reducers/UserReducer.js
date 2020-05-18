@@ -7,7 +7,6 @@ const initialState = {
 const userReducer = (state = initialState, action) => {
     let newState;
     const { type, payload } = action;
-    // console.log(payload);
     switch (type) {
         case userActionTypes.getUser:
             newState = { ...state, person: payload};

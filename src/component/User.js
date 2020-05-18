@@ -21,17 +21,13 @@ export class User extends React.Component {
         }
     }
     componentDidMount() {
-        this._getUserData();
+        this.props.getUser();
     }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps !== this.props) {
             this.setState({ person: nextProps.person });
         }
-    }
-
-    _getUserData = () => {
-        this.props.getUser();
     }
 
     render() {
@@ -50,7 +46,7 @@ export class User extends React.Component {
                     {this.state.person.phone}
                 </h2>
                 <div data-testid="image" className='text-center'>
-                    <img src = {this.state.person.picture.large} className = 'img-rounded' alt='#'/>
+                    <img src = {this.state.person.picture.large} className = 'img-rounded' alt={"LOADING"}/>
                 </div>
             </div>
         );
