@@ -2,8 +2,9 @@
 import React from 'react';
 import '../styles/Button.scss';
 import PropTypes from 'prop-types';
+import withAddedFunctionality from '../hoc/HOCforAddedFunc';
 
-export default class Child extends React.Component {
+export class Child extends React.Component {
     constructor(props) {
         super(props);
         this.myRef = React.createRef();
@@ -44,6 +45,7 @@ export default class Child extends React.Component {
         console.log(this.state);
         return (
             <div>
+                <h1>{this.props.greeting}</h1>
                 <h1 data-testid="error">
                     {this.state.error}
                 </h1>
@@ -76,3 +78,6 @@ export default class Child extends React.Component {
 Child.propTypes = {
     age: PropTypes.number.isRequired
 };
+
+const updatedChild = withAddedFunctionality(Child);
+export default updatedChild;

@@ -1,6 +1,6 @@
 import React from 'react';
-// import Parent from './Parent';
-import User from './User';
+import Parent from './Parent';
+// import User from './User';
 
 
 export default class App extends React.Component {
@@ -13,10 +13,10 @@ export default class App extends React.Component {
   render() {
     return (
       <div>
-        {/* <Parent
+        <Parent
           age={this.state.age}
-        /> */}
-        <User/>
+        />
+        {/* <User/> */}
       </div>
     );
   }
